@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital@1&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Bellota Text', cursive;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  padding: 20px;
+  background-color: #b3cce6;
+  border-radius: 20px;
+}
+.header {
+  flex-direction: column;
+  gap: 10px;
+}
+h1 {
+  font-size: 50px;
+}
+.input-screen {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.screen {
+  width: 100%;
+  text-align: end;
+  font-size: 24px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+}
+
+.calculator {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+}
+.btn {
+  border-radius: 50px;
+  font-size: 28px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
