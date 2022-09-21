@@ -13,6 +13,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  background-color: blue;
 }
 .flex {
   display: flex;
@@ -42,6 +43,7 @@ h1 {
   outline: none;
   border: none;
   border-radius: 20px;
+  padding: 5px;
 }
 
 .calculator {
@@ -57,4 +59,10 @@ h1 {
   border: none;
   outline: none;
   cursor: pointer;
+}
+.stretch {
+  grid-column: 1 / span 2;
+}
+.zero {
+  width: 100%;
 }
