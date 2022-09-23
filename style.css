@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital@1&display=swap');
 
+:root {
+  --body-background: #4c8099;
+  --primary-background: #669999;
+  --secondary-background: #578a99;
+  --button-background: #ffffff;
+  --primary-font: #000033;
+}
+
 *,
 *::before,
 *::after {
@@ -13,7 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: blue;
+  background-color: var(--body-background);
 }
 .flex {
   display: flex;
@@ -22,7 +30,7 @@ body {
 }
 .container {
   padding: 20px;
-  background-color: #b3cce6;
+  background-color: var(--primary-background);
   border-radius: 20px;
 }
 .header {
@@ -31,21 +39,32 @@ body {
 }
 h1 {
   font-size: 50px;
+  color: var(--primary-font);
 }
-.input-screen {
+.input-result {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   margin-bottom: 20px;
+  background-color: var(--secondary-background);
+  border-radius: 20px;
 }
-.screen {
+.user-input,
+.result {
+  text-align: right;
   width: 100%;
-  text-align: end;
-  font-size: 24px;
+  background-color: transparent;
+  padding-right: 10px;
+  color: var(--primary-font);
   outline: none;
   border: none;
-  border-radius: 20px;
-  padding: 5px;
 }
-
+.result {
+  font-size: 30px;
+}
+.user-input {
+  font-size: 26px;
+}
 .calculator {
   display: grid;
   gap: 10px;
@@ -59,6 +78,27 @@ h1 {
   border: none;
   outline: none;
   cursor: pointer;
+  box-shadow: -6px -6px 9px #1a4c99, 11px 11px 21px -8px #1a4c99;
+  background-color: var(--button-background);
+  color: var(--primary-font);
+  transition: all 0.1s ease-in-out;
+}
+.btn:hover {
+  transform: translateY(3px);
+}
+.clear:hover,
+.backspace:hover {
+  background-color: #ff9999;
+}
+.number:hover,
+.decimal:hover {
+  background-color: #80aaff;
+}
+.equal:hover {
+  background-color: #80ffbf;
+}
+.operator:hover {
+  background-color: #d5ff80;
 }
 .stretch {
   grid-column: 1 / span 2;
