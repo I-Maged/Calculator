@@ -13,20 +13,23 @@ document.addEventListener('keyup', keyboardSupport);
 clearBtn.addEventListener('click', reset);
 equalBtn.addEventListener('click', calculate);
 
+//Event listener for numbers, decimal and backspace buttons
 numberBtns.forEach((number) => {
   number.addEventListener('click', (e) => {
     handleNumber(e.target.innerText);
   });
 });
 
+//Event listener for operation buttons
 operatorBtns.forEach((operator) => {
   operator.addEventListener('click', (e) => {
     handleOperator(e.target.innerText);
   });
 });
 
+//handles pressed numbers
 function handleNumber(number) {
-  if (number == '←') {
+  if (number == '←' || number == 'Backspace') {
     currentNumber = currentNumber.slice(0, -1);
     userInput.value = currentNumber;
     return;
@@ -41,6 +44,7 @@ function handleNumber(number) {
   currentNumber += number;
 }
 
+//handles pressed operation
 function handleOperator(op) {
   if (userInput.value == '' && result.value == '') {
     return;
@@ -62,6 +66,7 @@ function handleOperator(op) {
   operation = op;
 }
 
+//handles calculation operation
 function calculate() {
   if (firstNumber == '' || currentNumber == '') {
     return;
@@ -86,6 +91,7 @@ function calculate() {
   handleResult(newResult);
 }
 
+//Shows result and prepares for new operation
 function handleResult(newResult) {
   result.value = newResult;
   firstNumber = newResult;
@@ -93,6 +99,7 @@ function handleResult(newResult) {
   userInput.value = '';
 }
 
+//Keyboard support
 function keyboardSupport(e) {
   e.preventDefault();
 
@@ -106,9 +113,18 @@ function keyboardSupport(e) {
     e.key === '%'
   ) {
     handleOperator(e.key);
+  } else if (
+    (e.key >= 0 && e.key <= 9) ||
+    e.key == 'Backspace' ||
+    e.key === '.'
+  ) {
+    handleNumber(e.key);
+  } else if (e.key == 'Escape' || e.key == 'c' || e.key == 'C') {
+    reset();
   }
 }
 
+//Reset function
 function reset() {
   firstNumber = '';
   currentNumber = '';

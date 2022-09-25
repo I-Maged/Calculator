@@ -90,8 +90,7 @@ h1 {
 .backspace:hover {
   background-color: #ff9999;
 }
-.number:hover,
-.decimal:hover {
+.number:hover {
   background-color: #80aaff;
 }
 .equal:hover {
