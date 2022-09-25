@@ -6,61 +6,81 @@ const userInput = document.querySelector('.user-input');
 const result = document.querySelector('.result');
 
 let firstNumber = '';
-let secondNumber = '';
-let operatorCheck = false;
+let currentNumber = '';
 let operation = '';
 
-equalBtn.addEventListener('click', calculate);
+document.addEventListener('keyup', keyboardSupport);
 clearBtn.addEventListener('click', reset);
+equalBtn.addEventListener('click', calculate);
 
 numberBtns.forEach((number) => {
   number.addEventListener('click', (e) => {
-    if (number.classList.contains('zero') && userInput.value == '') {
-      return;
-    }
-
-    if (!operatorCheck && result.value != '' && userInput.value == '') {
-      userInput.value += e.target.innerText;
-      result.value = '';
-      firstNumber = e.target.innerText;
-    } else if (operatorCheck) {
-      userInput.value += e.target.innerText;
-      secondNumber += e.target.innerText;
-    } else {
-      userInput.value += e.target.innerText;
-      firstNumber += e.target.innerText;
-    }
+    handleNumber(e.target.innerText);
   });
 });
 
 operatorBtns.forEach((operator) => {
   operator.addEventListener('click', (e) => {
-    if (userInput.value == '' && firstNumber == '') {
-      return;
-    } else if (isNaN(userInput.value.slice(-1)) && firstNumber != '') {
-      userInput.value = userInput.value.slice(0, -1);
-    }
-    userInput.value += e.target.innerText;
-    operatorCheck = true;
-    operation = e.target.innerText;
+    handleOperator(e.target.innerText);
   });
 });
 
+function handleNumber(number) {
+  if (number == '←') {
+    currentNumber = currentNumber.slice(0, -1);
+    userInput.value = currentNumber;
+    return;
+  } else if (currentNumber == '0' && number == '0') {
+    return;
+  } else if (number == '.' && currentNumber.includes('.')) {
+    return;
+  } else if (result.value != '' && currentNumber == '') {
+    reset();
+  }
+  userInput.value += number;
+  currentNumber += number;
+}
+
+function handleOperator(op) {
+  if (userInput.value == '' && result.value == '') {
+    return;
+  } else if (isNaN(userInput.value.slice(-1)) && firstNumber != '') {
+    userInput.value = userInput.value.slice(0, -1);
+  } else if (
+    userInput.value.includes('+') ||
+    userInput.value.includes('-') ||
+    userInput.value.includes('*') ||
+    userInput.value.includes('/') ||
+    userInput.value.includes('%')
+  ) {
+    calculate();
+  } else if (firstNumber == '') {
+    firstNumber = currentNumber;
+    currentNumber = '';
+  }
+  userInput.value += op;
+  operation = op;
+}
+
 function calculate() {
+  if (firstNumber == '' || currentNumber == '') {
+    return;
+  }
+
   let newResult = 0;
   firstNumber = Number(firstNumber);
-  secondNumber = Number(secondNumber);
+  currentNumber = Number(currentNumber);
 
   if (operation == '+') {
-    newResult = firstNumber + secondNumber;
+    newResult = firstNumber + currentNumber;
   } else if (operation == '-') {
-    newResult = firstNumber - secondNumber;
+    newResult = firstNumber - currentNumber;
   } else if (operation == '/') {
-    newResult = firstNumber / secondNumber;
+    newResult = firstNumber / currentNumber;
   } else if (operation == '*') {
-    newResult = firstNumber * secondNumber;
+    newResult = firstNumber * currentNumber;
   } else if (operation == '%') {
-    newResult = (firstNumber * 100) / secondNumber;
+    newResult = (firstNumber * 100) / currentNumber;
   }
 
   handleResult(newResult);
@@ -69,15 +89,29 @@ function calculate() {
 function handleResult(newResult) {
   result.value = newResult;
   firstNumber = newResult;
-  secondNumber = '';
+  currentNumber = '';
   userInput.value = '';
-  operatorCheck = false;
+}
+
+function keyboardSupport(e) {
+  e.preventDefault();
+
+  if (e.key == 'Enter') {
+    calculate();
+  } else if (
+    e.key === '+' ||
+    e.key === '-' ||
+    e.key === '/' ||
+    e.key === '*' ||
+    e.key === '%'
+  ) {
+    handleOperator(e.key);
+  }
 }
 
 function reset() {
   firstNumber = '';
-  secondNumber = '';
-  operatorCheck = false;
+  currentNumber = '';
   operation = '';
   userInput.value = '';
   result.value = '';
